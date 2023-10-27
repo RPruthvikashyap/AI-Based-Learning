@@ -1,0 +1,84 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/scripts.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body style="background-image: url('{% static 'images/vector283a77f9.png' %}');">
+<div class="header">
+    <h1>E-learning</h1>
+    <div class="user-info">
+      {% if user.is_authenticated %}
+      <span id="username">Welcome {{ user.username }}</span>
+      <form action="{% url 'logout_user' %}" method="post">
+        {% csrf_token %}
+        <button class="btn" type="submit" id="logout-button">Logout</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+<div class = "container1">
+<div class="scripts-container">
+  {% for script in scripts %}
+  <div class="card">
+    <h3>{{ script.title }}</h3>
+    <p>Author: {{ script.user.username }}</p>
+    <button class="read-button" data-script-id="{{ script.id }}">Read</button>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="popup-overlay">
+  <div class="popup-content">
+    <h3 id="popup-title"></h3>
+    <p id="popup-author"></p>
+    <p id="popup-script"></p>
+    <button class="close-button">Close</button>
+  </div>
+</div>
+
+<div class="footer">
+    <p>&copy; 2023 E-Learning. All rights reserved.</p>
+</div>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const readButtons = document.querySelectorAll('.read-button');
+    const popupOverlay = document.querySelector('.popup-overlay');
+    const popupContent = document.querySelector('.popup-content');
+    const popupTitle = document.querySelector('#popup-title');
+    const popupAuthor = document.querySelector('#popup-author');
+    const popupScript = document.querySelector('#popup-script');
+    const closeButton = document.querySelector('.close-button');
+
+    readButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const scriptId = this.getAttribute('data-script-id');
+        const script = this.closest('.card');
+        const title = script.querySelector('h3').textContent.toUpperCase();
+        const author = script.querySelector('p').textContent;
+
+        popupTitle.textContent = title;
+        popupAuthor.textContent = author;
+        popupScript.textContent = 'Loading...';
+
+        // Fetch the script details
+        fetch(`/get_script/${scriptId}/`)
+          .then(response => response.json())
+          .then(data => {
+            popupScript.textContent = data.script;
+            popupOverlay.style.display = 'block';
+          });
+      });
+    });
+
+    closeButton.addEventListener('click', function() {
+      popupOverlay.style.display = 'none';
+    });
+
+    popupOverlay.addEventListener('click', function(event) {
+      if (event.target === popupOverlay) {
+        popupOverlay.style.display = 'none';
+      }
+    });
+  });
+</script>
+{% endblock %}

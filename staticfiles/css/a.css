@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-group select,
+  .form-group input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+  }
+
+  .add-question {
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .add-question button {
+    padding: 5px 10px;
+    background-color: #cdcfd4;
+    color: grey;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    height: 40px;
+    border-width: 2px;
+    border-color: gray;
+  }
+
+  .added-questions {
+    margin-top: 20px;
+  }
+
+  .added-questions .question {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+
+  .added-questions .question label {
+    font-weight: bold;
+  }
+
+  .added-questions .question button {
+    background-color: white;
+    margin-left: 20px;
+    height: 40px;
+    width: 80px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .added-questions .question select {
+    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-left: 20px;
+    font-size: 16px;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 10px;
+    height: 40px;
+    border-width: 2px;
+    box-shadow: gray;
+    text-align: left;
+    border-color: #cdcfd4;
+  }   
+
+  #submit-btn {
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: #cdcfd4;
+    color: grey;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    height: 40px;
+    width: 50%;
+    border-width: 2px;
+    border-color: gray;
+  }
+
+  #close-btn{
+    margin-top: 20px;
+    padding: 5px 10px;
+    background-color: #cdcfd4;
+    color: grey;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    height: 40px;
+    width: 50%;
+    border-width: 2px;
+    border-color: gray;
+  }

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Activity</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group select,
+    .form-group input[type="text"] {
+      width: 100%;
+      height: 40px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      font-size: 16px;
+      resize: none;
+    }
+
+    .add-question {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .add-question button {
+      padding: 5px 10px;
+      background-color: #cdcfd4;
+      color: grey;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      height: 40px;
+      border-width: 2px;
+      border-color: gray;
+    }
+
+    .added-questions {
+      margin-top: 20px;
+    }
+
+    .added-questions .question {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    .added-questions .question label {
+      font-weight: bold;
+    }
+
+    .added-questions .question button {
+      background-color: white;
+      margin-left: 20px;
+      height: 40px;
+      width: 80px;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .added-questions .question select {
+      margin-bottom: 15px;
+      margin-top: 5px;
+      margin-left: 20px;
+      font-size: 16px;
+      outline: none;
+      background-color: transparent;
+      cursor: pointer;
+      border-radius: 10px;
+      height: 40px;
+      border-width: 2px;
+      box-shadow: gray;
+      text-align: left;
+      border-color: #cdcfd4;
+    }   
+
+    #submit-btn {
+      margin-top: 20px;
+      padding: 5px 10px;
+      background-color: #cdcfd4;
+      color: grey;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      height: 40px;
+      width: 50%;
+      border-width: 2px;
+      border-color: gray;
+    }
+
+    #close-btn{
+      margin-top: 20px;
+      padding: 5px 10px;
+      background-color: #cdcfd4;
+      color: grey;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      height: 40px;
+      width: 50%;
+      border-width: 2px;
+      border-color: gray;
+    }
+  </style>
+
+  <script>
+    function addQuestion() {
+      var questionContainer = document.getElementById("added-questions");
+
+      // Create a new question container
+      var questionDiv = document.createElement("div");
+      questionDiv.className = "question";
+
+      var label1 = document.createElement("label");
+      label1.innerHTML = "Activity:";
+      label1.style.display = "block"; // Display the label as a block element
+      //label1.style.marginBottom = "5px"; // Add some bottom margin
+      label1.style.marginLeft="20px";
+      label1.style.width = "34%";
+      questionDiv.appendChild(label1); // Append the label to the questionDiv
+
+      // Create dropdown input field 1
+      var dropdownInput1 = document.createElement("select");
+      dropdownInput1.innerHTML = 
+      "<option value='select1'>Select Activity</option><option value='Option 1'>Option 1</option><option value='Option 2'>Option 2</option><option value='Option 3'>Option 3</option>";
+      dropdownInput1.style.marginBottom = "10px"; // Add CSS styling
+      dropdownInput1.style.width = "95%"; // Set width
+      
+      questionDiv.appendChild(dropdownInput1);
+      
+      var label2 = document.createElement("label");
+      label2.innerHTML = "Skippable:";
+      label2.style.display = "block"; // Display the label as a block element
+      //label2.style.marginBottom = "5px"; // Add some bottom margin
+      label2.style.width="34%";
+      label2.style.marginLeft="20px";
+      questionDiv.appendChild(label2); // Append the label to the questionDiv
+      // Create dropdown input field 2
+      var dropdownInput2 = document.createElement("select");
+      dropdownInput2.innerHTML = "<option value='option2'>Skippable</option><option value='Option 1'>Option 1</option><option value='Option 2'>Option 2</option><option value='Option 3'>Option 3</option>";
+      dropdownInput2.style.marginBottom = "10px"; // Add CSS styling
+      dropdownInput2.style.width = "95%"; // Set width
+      questionDiv.appendChild(dropdownInput2);
+
+
+      // Create remove button
+      var removeButton = document.createElement("button");
+      removeButton.className = "btn btn-danger"; // Use Bootstrap's "danger" button style
+      removeButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">' +
+        '<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>' +
+        '</svg> Remove'; // SVG icon code for "dash-circle-fill"
+      removeButton.addEventListener("click", function() {
+        questionDiv.remove();
+        questionCounter--;
+        checkQuestionLimit();
+      });
+      questionDiv.appendChild(removeButton);
+
+var table = document.createElement("table");
+table.style.width = "100%"; // Set the table width to 100% to fill the available space
+
+// Create the first row
+var row1 = table.insertRow();
+var cell1 = row1.insertCell();
+cell1.appendChild(label1);
+var cell2 = row1.insertCell();
+cell2.appendChild(label2);
+
+
+// Create the second row
+var row2 = table.insertRow();
+var cell3 = row2.insertCell();
+cell3.style.width = "50%"; // Adjust the width of the cells as desired
+cell3.appendChild(dropdownInput1);
+var cell4 = row2.insertCell();
+cell4.style.width = "50%"; // Adjust the width of the cells as desired
+cell4.appendChild(dropdownInput2);
+var cell5 = row2.insertCell(); // Add a cell for the remove button
+cell5.appendChild(removeButton);
+
+// Append the table to the questionDiv
+questionDiv.appendChild(table);
+
+var label3 = document.createElement("label");
+      label3.innerHTML = "Question 1:";
+      label3.style.display = "block"; // Display the label as a block element
+      //label1.style.marginBottom = "5px"; // Add some bottom margin
+      label3.style.marginLeft="20px";
+      label3.style.width = "34%";
+      questionDiv.appendChild(label3); // Append the label to the questionDiv
+
+// Create skippable dropdown input field
+var skippableDropdownInput = document.createElement("select");
+skippableDropdownInput.innerHTML = "<option value='option3'>Select Activity</option><option value='Option 1'>Option 1</option><option value='Option 2'>Option 2</option><option value='Option 3'>Option 3</option>";
+skippableDropdownInput.style.width = "95%"; // Set width
+questionDiv.appendChild(skippableDropdownInput);
+
+// Append the question container to the added-questions container
+questionContainer.appendChild(questionDiv);
+}
+</script>
+</head>
+<body>
+  <div class="container">
+    <div class="form-group">
+      <label for="activity-name">Activity Name:</label>
+      <input type="text" id="activity-name" placeholder="Enter Activity Name">
+    </div>
+    <div id="added-questions" class="added-questions"></div>
+
+    <div class="add-question">
+      <button id="add-question-btn" onclick="addQuestion()">Add Question</button>
+    </div>
+    <button id="submit-btn">Submit</button>
+  </div>
+</body>
+</html>

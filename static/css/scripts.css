@@ -1,0 +1,239 @@
+/* Global styles */
+body {
+  font-family: system-ui;
+  margin: 0;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+	background-color: rgb(252, 245, 240);
+}
+
+.btn {
+		background-image: linear-gradient(to right, #16BFFD 0%, #CB3066  51%, #16BFFD  100%);
+		margin: 10px;
+		text-align: center;
+		text-transform: uppercase;
+		transition: 0.5s;
+		background-size: 200% auto;
+		color: white;
+		box-shadow: 0 0 20px #eee;
+		border-radius: 50px;
+		display: inline-block;
+		border: none;
+		width: 105px;
+		height: 40px;
+	  }
+
+	  .btn:hover {
+		background-position: right center; /* change the direction of the change here */
+		color: #fff;
+		text-decoration: none;
+	  }
+
+/* Header styles */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  color: #333;
+  padding: 5px;
+  text-align: left;
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  border-bottom: 1px solid #333;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+#username {
+  margin-right: 10px;
+}
+
+#logout-button {
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
+/* Container styles */
+.container1 {
+  padding-top: 120px;
+  margin-left: 65px;
+}
+
+/* Card styles */
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 250px;
+  margin-right: 10px;
+  vertical-align: top;
+  height: 190px;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin: 0;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Read button styles */
+.read-button {
+background-image: linear-gradient(to right, #16BFFD 0%, #CB3066  51%, #16BFFD  100%);
+margin: 5px;
+margin-top:65px;
+text-align: center;
+text-transform: uppercase;
+transition: 0.5s;
+background-size: 200% auto;
+color: white;
+box-shadow: 0 0 20px #eee;
+border-radius: 50px;
+display: inline-block;
+border: none;
+width: 90px;
+height: 40px;
+}
+
+.read-button:hover {
+ background-position: right center; /* change the direction of the change here */
+		color: #fff;
+		text-decoration: none;
+}
+
+/* Popup overlay styles */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 650px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius:10px;
+  width: inherit;
+}
+
+.popup-content h3 {
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+h3{
+text-transform: uppercase;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-image: linear-gradient(to right, #16BFFD 0%, #CB3066  51%, #16BFFD  100%);
+		margin: 5px;
+		text-align: center;
+		text-transform: uppercase;
+		transition: 0.5s;
+		background-size: 200% auto;
+		color: white;
+		box-shadow: 0 0 20px #eee;
+		border-radius: 20px;
+		display: inline-block;
+		border: none;
+		width: 80px;
+		height: 40px;
+}
+
+.close-button:hover {
+ background-position: right center; /* change the direction of the change here */
+		color: #fff;
+		text-decoration: none;
+}
+
+/* Footer styles */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Mobile styles */
+@media (max-width: 600px) {
+  .container1 {
+    padding-top: 150px;
+    margin-left: 10px;
+  }
+
+  .card {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .header {
+    height: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .user-info {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  #logout-button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .popup-content {
+    width: 90%;
+    max-width: 350px;
+  }
+}

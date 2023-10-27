@@ -1,0 +1,152 @@
+{% load static %}
+<html>
+<head>
+  <title>Index</title>
+  <link rel="stylesheet" href="{% static 'css/int.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="background-image: url('{% static 'images/vector283a77f9.png' %}');">
+  <div class="header">
+    <a href="{% url 'index' %}">
+      <img src="{% static 'images/E - Learning_1.png' %}" alt="E - Learning Logo">
+  </a>
+    <div class="user-info">
+      {% if user.is_authenticated %}
+      <span id="username">Welcome {{ user.username }}</span>
+      <form action="{% url 'logout_user' %}" method="post">
+        {% csrf_token %}
+        <button class="btn" type="submit" id="logout-button">Logout</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="container1">
+    <div>
+      <h2>Episode 1</h2>
+    </div>
+    <div class="container5">
+      <button class="addbtn" onclick="openPopup()" style="margin-left: 8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="url(#gradient)" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A20CA0" />
+              <stop offset="30%" stop-color="#A00DA1" />
+              <stop offset="100%" stop-color="#6020AF" />
+            </linearGradient>
+          </defs>
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+      </button>
+      {% if user.is_authenticated %}
+        {% for script in scripts %}
+        <div class="card">
+          <div class="container4">
+            <h4><b>{{ script.title }}</b></h4>
+            <button class="editbtn" onclick="editScript('{{ script.title|escapejs }}', '{{ script.generated_script|escapejs }}', {{ script.id }}, '{{ script.quiz|escapejs }}')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+              </svg>
+            </button>
+            <button class="delete" onclick="deleteScript({{ script.id }})">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="next">
+    <button class="nextbtn" onclick="addNewEpisode()">Add New Episode</button>
+  </div>
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup-content">
+      <div class="container">
+        <div class="select-box">
+          <div class="header-edit">
+            <h3>Insert intervention items</h3>
+          </div>
+          <div>
+            <input type="radio" name="select" id="radio1" value="Add Script">
+            <label class="radio-label" for="radio1">Add Script</label>
+          </div>
+          <div>
+            <input type="radio" name="select" id="radio3" value="Generate Graphics">
+            <label class="radio-label" for="radio3">Add Activity</label>
+          </div>
+          <div>
+            <input type="radio" name="select" id="radio4" value="Video Branching">
+            <label class="radio-label" for="radio4">Generate Video</label>
+          </div>
+          <div class="butn">
+            <button class="btn" onclick="addButtonClick()">Add</button>
+            <button class="btn" onclick="closePopup()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="formOverlay" class="popup-overlay">
+    <div class="popup-content">
+      <div class="container2">
+        <div class="generate-box">
+          <div class="header-form">
+            <h2 style="left: -285px;">Generate Script</h2>
+          </div>
+          <form id="generateScriptForm">
+            {% csrf_token %}
+            <input type="hidden" name="episode_number" value="{{ episode_number }}">
+            <input type="text" class="text ele1" placeholder="Enter Topic" name="title">
+            <div class="pro-tip">
+              Pro Tip:
+              <i class="think-of-a">Think of a topic on which you'd like to create your intervention"</i>
+            </div>
+            <textarea placeholder="Enter Notes" name="idea"></textarea>
+            <div class="pro-tip">
+              Pro Tip:
+              <i class="think-of-a">Get started by entering 6 to 8 major points as notes, and let us know the tone and content you want to cover. You can also instruct to generate a quiz or an assessment to enhance your intervention.</i>
+            </div>
+            <div class="genbtn">
+              <button class="clkbtn" type="submit">Generate Script</button>
+              <button class="clkbtn" onclick="closeopenform()">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="activityFormOverlay" class="popup-overlay">
+    {% csrf_token %}
+    <div class="popup-content">
+      <div class="container3">
+        <div class="header-form">
+          <h2 style="left: -180px; bottom: -10px;">Edit Script</h2>
+          <button class="clkbtn" onclick="generateQuiz()">Generate Activity</button>
+        </div>
+        <div class="edit-box">
+          <input type="text" class="text ele" placeholder="Topic">
+          <textarea placeholder="Generated Script"></textarea>
+          <textarea id="quiz_{{ script.id }}" placeholder="Quiz"></textarea>
+          <input type="hidden" name="scriptId" value="{{ script.id }}">
+          <div>
+            <button class="clkbtn" onclick="saveEditedScript()">Save</button>
+            <button class="clkbtn" onclick="closeActivityForm()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="loader-container" id="loaderContainer" style="display: none;">
+    <div class="bouncing-balls">
+      <div class="ball"></div>
+      <div class="ball"></div>
+      <div class="ball"></div>
+    </div>
+    <div class="loading-text">Generating your request...</div>
+  </div>
+  
+  <script src="{% static 'js/int.js' %}"></script>    
+</body>
+</html>

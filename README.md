@@ -1,4 +1,3 @@
-
 # AI-Based-Learning
 The AI-based Learning Platform is a versatile educational solution built with Python, Django,
 and web technologies, including MySQL for data storage. It features seamless integration with

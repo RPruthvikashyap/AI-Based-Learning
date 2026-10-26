@@ -1,16 +1,24 @@
 import os
-import ldap
-import logging
 
-from django_auth_ldap.config import LDAPSearch
+from django.core.exceptions import ImproperlyConfigured
+from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'django-insecure-3qp(%xfw##8q_90f#wglx2e1f93-4p+le%#8brhn(&l!$hjnrn'
+# Secrets and environment-specific values come from environment variables,
+# optionally loaded from a .env file (see .env.example)
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = []
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured('Set DJANGO_SECRET_KEY when DJANGO_DEBUG is off.')
+    SECRET_KEY = get_random_secret_key()
+
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if h.strip()]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_auth_ldap',
     'Learn',
 ]
 
@@ -89,32 +96,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-AUTH_LDAP_SERVER_URI = 'ldap://192.168.0.7:389'
-AUTH_LDAP_BIND_DN = 'CN=LDAPUser,CN=Users,DC=girmiti,DC=in'
-AUTH_LDAP_BIND_PASSWORD = 'L6x7y8$321'
-
-# Enable verbose logging for LDAP connection
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
-
-# LDAP user search configuration
-AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    'cn=Users,dc=girmiti,dc=in',
-    ldap.SCOPE_SUBTREE,
-    '(sAMAccountName=%(user)s)'
-)
-
-AUTH_LDAP_USER_ATTR_MAP = {
-    'username': 'sAMAccountName',
-    'first_name': 'givenName',
-    'last_name': 'sn',
-    'email': 'mail',
-}
+LOGIN_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

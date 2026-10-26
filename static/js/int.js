@@ -111,7 +111,7 @@ function hideLoader() {
 
 document.addEventListener("DOMContentLoaded", function () {
   var generateScriptForm = document.getElementById("generateScriptForm");
-  var csrfToken = "{{ csrf_token }}";
+  var csrfToken = getCSRFToken();
 
   generateScriptForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -166,7 +166,7 @@ function saveEditedScript() {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/edit_script/" + scriptId + "/", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}"); 
+  xhr.setRequestHeader("X-CSRFToken", getCSRFToken()); 
 
   var formData = "generated_script=" + encodeURIComponent(generatedScript);
   formData += "&quiz=" + encodeURIComponent(quizContent);
@@ -195,11 +195,12 @@ function deleteScript(scriptId) {
   var confirmDelete = confirm("Are you sure you want to delete this script?");
 
   if (!confirmDelete) {
+    return;
   }
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/delete_script/" + scriptId + "/", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+  xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {

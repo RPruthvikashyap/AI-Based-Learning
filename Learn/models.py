@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.utils import timezone
 
 
 class Scripts(models.Model):
@@ -9,7 +9,7 @@ class Scripts(models.Model):
     idea = models.TextField()
     generated_script = models.TextField()
     quiz = models.TextField(default='')
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(default=timezone.now)
     episode = models.PositiveIntegerField(default=1)  # Add an episode field
 
     def __str__(self):
